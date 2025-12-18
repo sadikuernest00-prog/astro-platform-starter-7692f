@@ -1,19 +1,109 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
+const base = import.meta.env.BASE_URL;
+const img = (path) => `${base}${String(path || "").replace(/^\/+/, "")}`;
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
-
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const products = [
+  { id: "set-black", name: "Black Satin-Look Cami & Shorts Set", price: 499, image: "/images/set-black.png", colors: ["Black"], sizes: ["S","M","L"], defaultColor: "Black" },
+  { id: "set-white", name: "White Satin-Look Cami & Shorts Set", price: 499, image: "/images/set-white.png", colors: ["White"], sizes: ["S","M","L"], defaultColor: "White" },
+  { id: "nude-slip", name: "Nude Satin-Look Slip Dress", price: 499, image: "/images/nude-slipp-dress.png", colors: ["Nude"], sizes: ["S","M","L"], defaultColor: "Nude" },
+  { id: "white-slip", name: "White Satin-Look Slip Dress", price: 499, image: "/images/white-slip-dress.png", colors: ["White"], sizes: ["S","M","L"], defaultColor: "White" },
+  { id: "black-chemise", name: "Black Satin-Look Chemise Dress", price: 499, image: "/images/black-chemise.png", colors: ["Black"], sizes: ["S","M","L"], defaultColor: "Black" },
+];
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
-</Layout>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amicbridge — Shop</title>
+  <style>
+    :root{--bg:#f7f6f4;--text:#151515;--muted:#6b6b6b;--border:#dedede;--card:#fff;}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{padding:22px 40px;display:flex;justify-content:space-between;align-items:center}
+    main{max-width:1100px;margin:0 auto;padding:0 40px 70px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+    .card{background:var(--card);border:1px solid var(--border);padding:14px}
+    img{width:100%;height:260px;object-fit:cover;border:1px solid var(--border);background:#fff}
+    .muted{color:var(--muted)}
+    .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}
+    select,button{padding:10px;border:1px solid var(--border);background:#fff}
+    button{cursor:pointer;border-color:var(--text);background:var(--text);color:#fff;font-weight:700}
+    a{color:var(--text);text-decoration:none}
+    a:hover{text-decoration:underline}
+    @media (max-width: 900px){header,main{padding-left:18px;padding-right:18px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <strong>Amicbridge</strong><div class="muted">Satin-look sleepwear</div>
+    </div>
+    <a href={`${base}checkout`}>Go to checkout →</a>
+  </header>
+
+  <main>
+    <h1 style="margin:0 0 6px;font-size:34px">Shop</h1>
+    <div class="muted">Add items to cart, then pay by card.</div>
+
+    <div class="grid">
+      {products.map((p) => (
+        <div class="card" data-id={p.id}>
+          <img src={img(p.image)} alt={p.name} />
+          <div style="margin-top:10px">
+            <strong>{p.name}</strong>
+            <div class="muted">{p.price} NOK</div>
+          </div>
+
+          <div class="row">
+            <select class="size">
+              {p.sizes.map((s) => <option value={s}>{s}</option>)}
+            </select>
+            <select class="color">
+              {p.colors.map((c) => <option value={c}>{c}</option>)}
+            </select>
+          </div>
+
+          <div class="row">
+            <button class="add">Add to cart</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+
+  <script>
+    function readCart() {
+      try { return JSON.parse(localStorage.getItem("cart") || "[]"); } catch { return []; }
+    }
+    function writeCart(cart) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".add");
+      if (!btn) return;
+
+      const card = e.target.closest(".card");
+      const id = card.dataset.id;
+      const name = card.querySelector("strong").textContent;
+      const price = Number(card.querySelector(".muted").textContent.replace(/[^\d]/g,"")) || 499;
+
+      const size = card.querySelector(".size").value;
+      const color = card.querySelector(".color").value;
+      const image = card.querySelector("img").getAttribute("src");
+
+      const cart = readCart();
+
+      // Merge same product + same size + same color
+      const existing = cart.find(it => it.id === id && it.size === size && it.color === color);
+      if (existing) existing.quantity += 1;
+      else cart.push({ id, name, price, quantity: 1, size, color, image });
+
+      writeCart(cart);
+      btn.textContent = "Added ✓";
+      setTimeout(() => btn.textContent = "Add to cart", 900);
+    });
+  </script>
+</body>
+</html>
