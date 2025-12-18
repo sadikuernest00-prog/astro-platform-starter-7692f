@@ -2,7 +2,10 @@ import type { APIRoute } from "astro";
 import Stripe from "stripe";
 import { CATALOG } from "../../lib/catalog";
 
-const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
+const secret = import.meta.env.STRIPE_SECRET_KEY;
+if (!secret) throw new Error("Missing STRIPE_SECRET_KEY env var");
+
+const stripe = new Stripe(secret);
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -16,7 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = items.map((it) => {
+    const line_items = items.map((it) => {
       const p = CATALOG[it.id];
       if (!p) throw new Error(`Unknown product id: ${it.id}`);
 
@@ -39,6 +42,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     const siteUrl = import.meta.env.PUBLIC_SITE_URL;
+    if (!siteUrl) throw new Error("Missing PUBLIC_SITE_URL env var");
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -60,3 +64,4 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 };
+
