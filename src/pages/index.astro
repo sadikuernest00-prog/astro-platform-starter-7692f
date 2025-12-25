@@ -1,12 +1,12 @@
 
 ---
-/* AmicBridge – Request form wired to Formspree */
+/* AmicBridge – Bank-style landing + request form */
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>AmicBridge – Request</title>
+    <title>AmicBridge | Private Lending & Investment Network</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       :root {
@@ -18,40 +18,204 @@
       body {
         margin: 0;
         padding: 0;
-        background: #f4f4f5;
-        color: #111827;
+        background: #f3f4f6;
+        color: #0f172a;
       }
 
-      .page {
-        max-width: 720px;
+      /* Header / layout */
+      header.site-header {
+        background: #0b1726;
+        color: #e5e7eb;
+        padding: 14px 0;
+        margin-bottom: 24px;
+      }
+
+      .header-inner {
+        max-width: 1040px;
         margin: 0 auto;
-        padding: 40px 16px 80px;
+        padding: 0 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
 
-      h1 {
-        font-size: 2.25rem;
-        margin-bottom: 6px;
-        letter-spacing: -0.04em;
+      .logo {
+        font-weight: 600;
+        font-size: 1.2rem;
+        letter-spacing: 0.04em;
       }
 
-      p {
+      .logo span {
+        color: #60a5fa;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        font-size: 0.9rem;
+      }
+
+      .nav-links a {
+        color: #e5e7eb;
+        text-decoration: none;
+      }
+
+      .nav-links a:hover {
+        text-decoration: underline;
+      }
+
+      main.page {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 18px 40px;
+      }
+
+      /* Hero */
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+        gap: 24px;
+        align-items: flex-start;
+        margin-bottom: 24px;
+      }
+
+      .hero-main h1 {
+        font-size: 2.1rem;
         margin: 0 0 10px;
+        font-weight: 600;
       }
 
+      .hero-main p {
+        margin: 0 0 8px;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      .tagline {
+        font-size: 0.9rem;
+        margin-top: 4px;
+        color: #374151;
+      }
+
+      .pill {
+        display: inline-block;
+        font-size: 0.75rem;
+        padding: 3px 10px;
+        border-radius: 999px;
+        border: 1px solid #d1d5db;
+        background: #f9fafb;
+        color: #374151;
+        margin-top: 10px;
+      }
+
+      .hero-highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .hero-box {
+        background: #ffffff;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        padding: 10px 12px;
+      }
+
+      .hero-box-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .hero-box-text {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .hero-side {
+        background: #ffffff;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        padding: 14px 14px 16px;
+        font-size: 0.85rem;
+        color: #374151;
+      }
+
+      .hero-side h2 {
+        font-size: 1.05rem;
+        margin: 0 0 6px;
+      }
+
+      .hero-side ul {
+        padding-left: 18px;
+        margin: 6px 0 10px;
+      }
+
+      .hero-side li {
+        margin-bottom: 4px;
+      }
+
+      .info-line {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      /* Sections */
+      .section {
+        margin-top: 8px;
+      }
+
+      .section h2 {
+        font-size: 1.3rem;
+        margin: 0 0 6px;
+      }
+
+      .section p {
+        margin: 0 0 8px;
+        font-size: 0.9rem;
+      }
+
+      .three-cols {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin-top: 8px;
+      }
+
+      .plain-card {
+        background: #ffffff;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        padding: 12px 12px 14px;
+        font-size: 0.86rem;
+        color: #374151;
+      }
+
+      .plain-card h3 {
+        font-size: 0.95rem;
+        margin: 0 0 6px;
+      }
+
+      .subtle {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      /* Form card */
       .card {
         background: #ffffff;
-        border-radius: 20px;
-        padding: 24px 20px 28px;
-        margin-top: 24px;
-        box-shadow:
-          0 18px 45px rgba(15, 23, 42, 0.06),
-          0 0 0 1px rgba(209, 213, 219, 0.8);
+        border-radius: 6px;
+        padding: 18px 16px 20px;
+        border: 1px solid #e5e7eb;
+        margin-top: 8px;
       }
 
       form {
         display: grid;
         gap: 14px;
-        margin-top: 12px;
+        margin-top: 10px;
       }
 
       label {
@@ -65,9 +229,9 @@
       textarea,
       select {
         font: inherit;
-        padding: 9px 11px;
-        border-radius: 10px;
-        border: 1px solid #d4d4d8;
+        padding: 8px 10px;
+        border-radius: 4px;
+        border: 1px solid #d1d5db;
         width: 100%;
         box-sizing: border-box;
         background: #f9fafb;
@@ -77,8 +241,7 @@
       textarea:focus,
       select:focus {
         outline: none;
-        border-color: #4f46e5;
-        box-shadow: 0 0 0 1px #4f46e5;
+        border-color: #2563eb;
         background: #ffffff;
       }
 
@@ -89,36 +252,8 @@
 
       .two-col {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 14px;
-      }
-
-      .subtle {
-        font-size: 0.8rem;
-        color: #6b7280;
-      }
-
-      .btn {
-        border: none;
-        border-radius: 999px;
-        padding: 10px 22px;
-        font-size: 0.95rem;
-        cursor: pointer;
-        font-weight: 500;
-        background: #111827;
-        color: #ffffff;
-        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.28);
-        transition: transform 0.05s ease, box-shadow 0.05s ease;
-      }
-
-      .btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
-      }
-
-      .btn:active {
-        transform: translateY(0);
-        box-shadow: none;
       }
 
       .btn-row {
@@ -127,170 +262,369 @@
         margin-top: 6px;
       }
 
-      @media (max-width: 640px) {
-        .page {
-          padding-top: 24px;
-        }
+      .btn {
+        border-radius: 4px;
+        padding: 9px 20px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        font-weight: 500;
+        background: #0b1726;
+        color: #ffffff;
+        border: 1px solid #0b1726;
+      }
 
-        h1 {
-          font-size: 1.9rem;
+      .btn:hover {
+        background: #111827;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 0.8rem;
+        color: #374151;
+      }
+
+      .checkbox-row input {
+        width: auto;
+        margin-top: 2px;
+      }
+
+      .notice {
+        background: #f9fafb;
+        border-radius: 6px;
+        padding: 9px 11px;
+        font-size: 0.8rem;
+        color: #4b5563;
+        border: 1px solid #e5e7eb;
+        margin-top: 10px;
+      }
+
+      footer {
+        margin-top: 26px;
+        padding-top: 14px;
+        border-top: 1px solid #e5e7eb;
+        font-size: 0.75rem;
+        color: #6b7280;
+        text-align: center;
+      }
+
+      code {
+        font-size: 0.75rem;
+        background: #e5e7eb;
+        padding: 1px 4px;
+        border-radius: 3px;
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          grid-template-columns: minmax(0, 1fr);
         }
       }
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo">
+          Amic<span>Bridge</span>
+        </div>
+        <nav class="nav-links">
+          <a href="#about">About</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#network">The network</a>
+          <a href="#request">Send request</a>
+        </nav>
+      </div>
+    </header>
+
     <main class="page">
-      <header>
-        <h1>AmicBridge Request</h1>
-        <p>
-          Send a request for <strong>borrowing, lending, investing</strong> or
-          <strong>profit sharing</strong>. The details below will be sent safely
-          to the AmicBridge inbox.
-        </p>
-      </header>
-
-      <section class="card">
-        <h2 style="font-size: 1.3rem; margin-top: 0">
-          Join a deal / ask for a deal
-        </h2>
-        <p class="subtle">
-          Fill out your basic info and what you want to do in the network.
-        </p>
-
-        <!-- Formspree form -->
-        <form
-          action="https://formspree.io/f/xzznjkvd"
-          method="POST"
-          accept-charset="UTF-8"
-        >
-          <!-- Hidden meta fields (optional, helpful in Formspree inbox) -->
-          <input
-            type="hidden"
-            name="_subject"
-            value="New AmicBridge lending / borrowing / investment request"
-          />
-          <input type="hidden" name="_template" value="table" />
-
-          <div class="two-col">
-            <div>
-              <label for="name">Full name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <label for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="you@example.com"
-              />
-            </div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <label for="age">Age</label>
-              <input
-                id="age"
-                name="age"
-                type="number"
-                min="18"
-                max="120"
-                required
-                placeholder="30"
-              />
-            </div>
-            <div>
-              <label for="work">Work / occupation</label>
-              <input
-                id="work"
-                name="work"
-                type="text"
-                required
-                placeholder="Network administrator"
-              />
-            </div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <label for="income">Monthly income (number)</label>
-              <input
-                id="income"
-                name="income"
-                type="number"
-                min="0"
-                step="0.01"
-                required
-                placeholder="45000"
-              />
-            </div>
-            <div>
-              <label for="currency">Currency</label>
-              <select id="currency" name="currency" required>
-                <option value="">Choose currency</option>
-                <option value="NOK">NOK</option>
-                <option value="EUR">EUR</option>
-                <option value="USD">USD</option>
-                <option value="SEK">SEK</option>
-                <option value="CRYPTO">Crypto</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <label for="requestType">I am interested in</label>
-              <select id="requestType" name="request_type" required>
-                <option value="">Choose type</option>
-                <option value="BORROWING">Borrowing</option>
-                <option value="LENDING">Lending</option>
-                <option value="INVESTMENT">Investment</option>
-                <option value="PROFIT_SHARING">Profit sharing</option>
-              </select>
-            </div>
-            <div>
-              <label for="amount">Deal amount</label>
-              <input
-                id="amount"
-                name="amount"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="Amount in chosen currency"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label for="details">
-              Describe your request (loan terms, investment idea, profit share,
-              etc.)
-            </label>
-            <textarea
-              id="details"
-              name="details"
-              placeholder="Example: I want to borrow 50 000 NOK for 12 months to invest in equipment. I can offer profit sharing of X% or fixed APR..."
-            ></textarea>
-          </div>
-
-          <div class="btn-row">
-            <button class="btn" type="submit">Send request</button>
-          </div>
-
-          <p class="subtle">
-            When you submit, the information is sent to AmicBridge via
-            Formspree at <code>/f/xzznjkvd</code>.
+      <!-- HERO -->
+      <section class="hero" id="about">
+        <div class="hero-main">
+          <h1>AmicBridge – a private lending &amp; investment network</h1>
+          <p class="tagline">
+            For people and business people who want to borrow, lend, invest and
+            share profit on clear terms.
           </p>
-        </form>
+          <p>
+            AmicBridge is not a traditional bank. It is a network where members
+            can create solid deals together: loans, investments and
+            profit-sharing agreements that aim to grow their money in a
+            controlled way.
+          </p>
+          <span class="pill">Serious money. Simple structure. Clear terms.</span>
+
+          <div class="hero-highlights">
+            <div class="hero-box">
+              <div class="hero-box-title">Borrowing</div>
+              <div class="hero-box-text">
+                Request funding for business, projects or personal needs, with
+                transparent conditions.
+              </div>
+            </div>
+            <div class="hero-box">
+              <div class="hero-box-title">Lending &amp; investing</div>
+              <div class="hero-box-text">
+                Put your capital to work by lending or investing into selected
+                deals.
+              </div>
+            </div>
+            <div class="hero-box">
+              <div class="hero-box-title">Profit sharing</div>
+              <div class="hero-box-text">
+                Build arrangements where both sides share risk and upside in a
+                fair way.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side" id="how-it-works">
+          <h2>How AmicBridge works</h2>
+          <ul>
+            <li>You send a request with your information and what you want.</li>
+            <li>We review it inside the AmicBridge network.</li>
+            <li>
+              If it fits, we connect you with people or businesses interested in
+              a deal.
+            </li>
+          </ul>
+          <p class="info-line">
+            Every agreement is made directly between the parties. AmicBridge
+            focuses on structure, clarity and matching the right people.
+          </p>
+        </aside>
       </section>
+
+      <!-- WHO IT'S FOR / TRUST SECTION -->
+      <section class="section" id="network">
+        <h2>The AmicBridge network</h2>
+        <p>
+          The network is for people and business people who want to treat money
+          seriously: clear numbers, written agreements, realistic expectations.
+        </p>
+
+        <div class="three-cols">
+          <div class="plain-card">
+            <h3>For borrowers</h3>
+            <p>
+              You may be building a business, handling a project or need a
+              structured private loan.
+            </p>
+            <p class="subtle">
+              You are ready to share your situation honestly and follow clear
+              repayment or profit-sharing terms.
+            </p>
+          </div>
+          <div class="plain-card">
+            <h3>For lenders &amp; investors</h3>
+            <p>
+              You have capital you want to grow, but prefer understandable deals
+              instead of speculation.
+            </p>
+            <p class="subtle">
+              You are open to both fixed interest and structured profit-sharing
+              with agreed risk levels.
+            </p>
+          </div>
+          <div class="plain-card">
+            <h3>For long-term partners</h3>
+            <p>
+              Over time, repeat cooperation inside the network can build trust,
+              track record and better opportunities.
+            </p>
+            <p class="subtle">
+              AmicBridge is built around relationships, not “quick wins”.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- REQUEST FORM -->
+      <section class="section" id="request">
+        <h2>Send a request to AmicBridge</h2>
+        <p class="subtle">
+          Fill in your information and what you are looking for: borrowing,
+          lending, investment, profit sharing or simply a way to grow your
+          money. We will review and contact you directly if it fits the
+          network.
+        </p>
+
+        <div class="card">
+          <!-- Formspree form -->
+          <form
+            action="https://formspree.io/f/xzznjkvd"
+            method="POST"
+            accept-charset="UTF-8"
+          >
+            <!-- Metadata for your Formspree inbox -->
+            <input
+              type="hidden"
+              name="_subject"
+              value="New AmicBridge request"
+            />
+            <input type="hidden" name="_template" value="table" />
+
+            <div class="two-col">
+              <div>
+                <label for="name">Full name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  placeholder="Your full name"
+                />
+              </div>
+              <div>
+                <label for="email">Email address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                />
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <label for="age">Age</label>
+                <input
+                  id="age"
+                  name="age"
+                  type="number"
+                  min="18"
+                  max="120"
+                  required
+                  placeholder="30"
+                />
+              </div>
+              <div>
+                <label for="work">Work / occupation</label>
+                <input
+                  id="work"
+                  name="work"
+                  type="text"
+                  required
+                  placeholder="e.g. Business owner, employee, consultant"
+                />
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <label for="income">Monthly income (number)</label>
+                <input
+                  id="income"
+                  name="income"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                  placeholder="45000"
+                />
+              </div>
+              <div>
+                <label for="currency">Main currency</label>
+                <select id="currency" name="currency" required>
+                  <option value="">Choose currency</option>
+                  <option value="NOK">NOK</option>
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                  <option value="SEK">SEK</option>
+                  <option value="CRYPTO">Crypto</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div>
+                <label for="requestType">I am interested in</label>
+                <select id="requestType" name="request_type" required>
+                  <option value="">Select one</option>
+                  <option value="BORROWING">Borrowing</option>
+                  <option value="LENDING">Lending</option>
+                  <option value="INVESTMENT">Investment</option>
+                  <option value="PROFIT_SHARING">Profit sharing</option>
+                  <option value="GROW_MONEY">
+                    Investment to grow my money
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label for="amount">Approximate amount</label>
+                <input
+                  id="amount"
+                  name="amount"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="Amount in chosen currency"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="details">
+                Describe your request (purpose, time frame, risk level,
+                expected terms)
+              </label>
+              <textarea
+                id="details"
+                name="details"
+                placeholder="Example: I want to borrow 300 000 NOK for my company over 24 months with a fixed interest rate. Or: I want to invest EUR 50 000 into low–medium risk profit-sharing deals."
+              ></textarea>
+            </div>
+
+            <div class="checkbox-row">
+              <input
+                id="confirm"
+                name="confirm_information_correct"
+                type="checkbox"
+                required
+              />
+              <label for="confirm">
+                I confirm that the information I provide is correct to the best
+                of my knowledge and that AmicBridge may contact me about this
+                request.
+              </label>
+            </div>
+
+            <div class="btn-row">
+              <button class="btn" type="submit">
+                Send request to AmicBridge
+              </button>
+            </div>
+
+            <p class="subtle">
+              When you submit, this form is sent securely through Formspree
+              (<code>/f/xzznjkvd</code>). Your information is used only to
+              review and follow up on your request inside the AmicBridge
+              network.
+            </p>
+          </form>
+
+          <div class="notice">
+            <strong>Important information:</strong><br />
+            AmicBridge is a private network, not a bank and not a broker. We do
+            not promise any specific return and we do not guarantee that your
+            request will be accepted. Every deal is an agreement between the
+            parties involved, and you should always consider your own risk and
+            get independent advice if needed.
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        AmicBridge &copy; {new Date().getFullYear()} &middot; Private lending
+        and investment network. This page is informational and does not
+        constitute financial advice.
+      </footer>
     </main>
   </body>
 </html>
